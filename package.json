@@ -1,0 +1,44 @@
+{
+  "name": "firebase-logs-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Claude Code integration with Firebase emulator logs",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "firebase-logs-mcp-server": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "firebase",
+    "emulator",
+    "logs",
+    "claude",
+    "ai",
+    "debugging"
+  ],
+  "author": "Mark Hilton",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markhilton/firebase-logs-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/markhilton/firebase-logs-mcp-server/issues"
+  },
+  "homepage": "https://github.com/markhilton/firebase-logs-mcp-server#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}
