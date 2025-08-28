@@ -57,17 +57,60 @@ The script will:
 
 The standard `firebase emulators:start` command does not automatically save logs to a file. The MCP server needs a persistent log file to read from, which is created by the `start.sh` script using the `script` command to capture all output.
 
-## Claude Code Integration
+## Integration
 
-### 1. Install the MCP server globally
+### Claude Code Integration
+
+#### 1. Install the MCP server globally
 
 ```bash
 npm install -g firebase-logs-mcp-server
 ```
 
-### 2. Configure Claude Code
+#### 2. Configure Claude Code
 
-Add the following to your Claude Code configuration file (`claude_desktop_config.json`):
+Add the following to your Claude Code configuration file:
+
+**Location**: `~/.claude/claude.json`
+
+```json
+{
+  "mcpServers": {
+    "firebase-logs": {
+      "command": "npx",
+      "args": ["firebase-logs-mcp-server"]
+    }
+  }
+}
+```
+
+**Note**: By default, the server will look for `emulator-debug.log` in the current working directory. This works well for most projects as Claude Code operates in your project directory.
+
+#### Optional: Specify a custom log path
+
+Only add the `FIREBASE_LOG_PATH` environment variable if your log file is in a non-standard location:
+
+```json
+{
+  "mcpServers": {
+    "firebase-logs": {
+      "command": "npx",
+      "args": ["firebase-logs-mcp-server"],
+      "env": {
+        "FIREBASE_LOG_PATH": "/custom/path/to/emulator-debug.log"
+      }
+    }
+  }
+}
+```
+
+#### 3. Restart Claude Code
+
+After updating the configuration, restart Claude Code for the changes to take effect.
+
+### Claude Desktop Integration
+
+For Claude Desktop users, add to your configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`  
@@ -80,18 +123,14 @@ Add the following to your Claude Code configuration file (`claude_desktop_config
       "command": "npx",
       "args": ["firebase-logs-mcp-server"],
       "env": {
-        "FIREBASE_LOG_PATH": "/path/to/your/project/emulator-debug.log"
+        "FIREBASE_LOG_PATH": "/absolute/path/to/your/project/emulator-debug.log"
       }
     }
   }
 }
 ```
 
-Replace `/path/to/your/project/emulator-debug.log` with the actual path to your Firebase project where the log file will be created.
-
-### 3. Restart Claude Code
-
-After updating the configuration, restart Claude Code for the changes to take effect.
+**Note**: Claude Desktop requires an absolute path to the log file since it doesn't operate within your project directory.
 
 ## Available Tools
 
@@ -169,13 +208,15 @@ The `start.sh` script automatically handles port conflicts by:
 ### Claude Code doesn't see the server
 
 1. Verify the server is installed globally: `npm list -g firebase-logs-mcp-server`
-2. Check the Claude Code configuration file for syntax errors
-3. Ensure the path in `FIREBASE_LOG_PATH` is absolute, not relative
+2. Check the Claude Code configuration file (`~/.claude/claude.json`) for syntax errors
+3. If using `FIREBASE_LOG_PATH`, ensure it's an absolute path for Claude Desktop, or relative to your project for Claude Code
 4. Restart Claude Code after configuration changes
 
 ## Environment Variables
 
-- `FIREBASE_LOG_PATH`: Path to the Firebase emulator log file (default: `./emulator-debug.log`)
+- `FIREBASE_LOG_PATH`: Path to the Firebase emulator log file (default: `./emulator-debug.log` in the current working directory)
+  - **Claude Code**: Usually not needed - defaults to your project directory
+  - **Claude Desktop**: Required - must be an absolute path to the log file
 
 ## Contributing
 
