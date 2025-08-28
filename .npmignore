@@ -1,0 +1,54 @@
+# Source files
+*.ts
+!*.d.ts
+
+# Development files
+tsconfig.json
+.gitignore
+.git/
+
+# Test files
+*.test.*
+*.spec.*
+__tests__/
+test/
+
+# Build artifacts
+*.tsbuildinfo
+
+# Local Firebase data
+.emulator-data/
+emulator-debug.log
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+pubsub-debug.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# npm debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Example/demo files
+examples/
+demo/
+
+# Documentation source
+docs/
+*.md
+!README.md
+
+# Shell scripts (keep start.sh in published package for reference)
+# start.sh
